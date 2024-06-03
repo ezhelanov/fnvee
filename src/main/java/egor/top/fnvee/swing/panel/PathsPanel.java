@@ -1,4 +1,4 @@
-package egor.top.fnvee.swing;
+package egor.top.fnvee.swing.panel;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
