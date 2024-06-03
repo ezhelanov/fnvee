@@ -1,17 +1,17 @@
 package egor.top.fnvee.swing.frame;
 
+import egor.top.fnvee.swing.PostConstructable;
 import egor.top.fnvee.swing.panel.PathsPanel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.awt.*;
 
 @Component
 @Getter
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements PostConstructable {
 
     @Autowired
     private Dimension dimension;
@@ -22,7 +22,6 @@ public class MainFrame extends JFrame {
     @Autowired
     private JButton checkButton;
 
-    @PostConstruct
     public void postConstruct() {
         setSize(dimension.width / 2, dimension.height / 2);
         setLocation(dimension.width / 4, dimension.height / 4);
