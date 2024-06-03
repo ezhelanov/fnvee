@@ -30,4 +30,22 @@ public class SwingUtil {
         return button;
     }
 
+    public GridBagConstraints pos(int x, int y, int width, int gridheight) {
+        GridBagConstraints pos = pos(x, y);
+        pos.gridwidth = width;
+        pos.gridheight = gridheight;
+        return pos;
+    }
+
+    public GridBagConstraints pos(int x, int y) {
+        GridBagConstraints pos = new GridBagConstraints();
+        pos.gridx = x;
+        pos.gridy = y;
+        pos.weightx = 1;
+        pos.anchor = GridBagConstraints.WEST;
+        pos.fill = GridBagConstraints.HORIZONTAL;
+        return pos;
+    }
+
+
 }

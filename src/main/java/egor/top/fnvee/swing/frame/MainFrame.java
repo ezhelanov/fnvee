@@ -25,12 +25,11 @@ public class MainFrame extends JFrame implements PostConstructable {
     public void postConstruct() {
         setSize(dimension.width / 2, dimension.height / 2);
         setLocation(dimension.width / 4, dimension.height / 4);
+        setResizable(Boolean.FALSE);
         setTitle("FNVEE+ by e_ropka");
         setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(10, 1));
-        add(pathsPanel);
-        add(checkButton);
+        add(pathsPanel, BorderLayout.NORTH);
     }
 
 }
