@@ -1,5 +1,6 @@
 package egor.top.fnvee.swing;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 @Component
+@Getter
 public class PathsPanel extends JPanel {
 
     @Autowired
