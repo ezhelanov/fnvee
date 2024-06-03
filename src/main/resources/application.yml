@@ -1,0 +1,8 @@
+app:
+  path:
+    fnvee: "C:\\Games\\FalloutNewVegasExtendedEdition"
+    download: "E:\\Downloads"
+
+spring:
+  main:
+    banner-mode: off
