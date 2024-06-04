@@ -1,36 +1,14 @@
-package egor.top.fnvee.swing;
+package egor.top.fnvee.swing.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ResourceLoader;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
-@RequiredArgsConstructor
 @Configuration
-public class SwingConfig {
-
-    private final SwingUtil util;
-
-    @Bean
-    public Toolkit toolkit() {
-        return Toolkit.getDefaultToolkit();
-    }
-
-    @Bean
-    public Dimension dimension(Toolkit toolkit) {
-        return toolkit.getScreenSize();
-    }
-
-    @Bean
-    public ImageIcon icon(ResourceLoader resourceLoader) throws IOException {
-        return new ImageIcon(resourceLoader.getResource("assets/icon.png").getURL());
-    }
+public class PathsPanelConfig extends Config {
 
     @Bean
     public JTextField fnveeText(@Value("${app.path.fnvee}") String path) {
@@ -52,4 +30,5 @@ public class SwingConfig {
                 "Проверить"
         );
     }
+
 }
