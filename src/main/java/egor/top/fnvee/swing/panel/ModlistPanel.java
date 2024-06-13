@@ -39,8 +39,12 @@ public class ModlistPanel extends Panel {
         newButtonAdd.addActionListener((ActionEvent e) -> {
             if (!newMods.getSelectedValuesList().isEmpty()) {
                 newMods.getSelectedValuesList().forEach(path -> {
-                    pathService.createFolder(path);
-                    eButton.doClick();
+                    var newFolder = pathService.createFolder(path);
+                    if (!pathService.unZipAndCopyToFolder(path, newFolder)) {
+                        pathService.delete(newFolder);
+                    } else {
+                        eButton.doClick();
+                    }
                 });
             }
         });
