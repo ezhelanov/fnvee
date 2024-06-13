@@ -19,9 +19,4 @@ public class PathsPanelConfig extends Config {
         return new JTextField(path);
     }
 
-    @Bean
-    public JButton checkButton() {
-        return new JButton("Проверить");
-    }
-
 }

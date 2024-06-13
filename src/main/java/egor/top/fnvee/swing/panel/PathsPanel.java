@@ -1,6 +1,7 @@
 package egor.top.fnvee.swing.panel;
 
 import egor.top.fnvee.swing.SwingConstants;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,8 @@ public class PathsPanel extends Panel {
     private JTextField downloadText;
     private Path downloadPath;
 
-    @Autowired
-    private JButton checkButton;
+    @Setter(AccessLevel.NONE)
+    private final JButton checkButton = new JButton("Проверить");
 
     @Override
     public void postConstruct() {
@@ -45,7 +46,7 @@ public class PathsPanel extends Panel {
     }
 
     private void tryGetPath() {
-        log.warn("+++ tryGetPath +++");
+        log.trace("+++ tryGetPath +++");
 
         try {
             Path fnveePath = util.toPath(fnveeText);
@@ -54,10 +55,10 @@ public class PathsPanel extends Panel {
                 this.fnveePath = fnveePath;
                 log.info(fnveePath.toString());
             } else {
-                fnveeText.setBackground(Color.RED);
+                fnveeText.setBackground(SwingConstants.red);
             }
         } catch (Exception e) {
-            fnveeText.setBackground(Color.RED);
+            fnveeText.setBackground(SwingConstants.red);
         }
 
         try {
@@ -67,13 +68,13 @@ public class PathsPanel extends Panel {
                 this.downloadPath = downloadPath;
                 log.info(downloadPath.toString());
             } else {
-                downloadText.setBackground(Color.RED);
+                downloadText.setBackground(SwingConstants.red);
             }
         } catch (Exception e) {
-            downloadText.setBackground(Color.RED);
+            downloadText.setBackground(SwingConstants.red);
         }
 
-        log.warn("--- tryGetPath ---");
+        log.trace("--- tryGetPath ---");
     }
 
 }

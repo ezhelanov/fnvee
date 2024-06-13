@@ -2,7 +2,13 @@ app:
   path:
     fnvee: "C:\\Games\\FalloutNewVegasExtendedEdition"
     download: "E:\\Downloads"
+    mo2: "\\MO2\\mods"
+    e: "\\E_"
 
 spring:
   main:
     banner-mode: off
+
+logging:
+  level:
+    egor.top.fnvee: TRACE

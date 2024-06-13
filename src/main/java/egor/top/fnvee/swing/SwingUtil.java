@@ -15,10 +15,10 @@ public class SwingUtil {
         return Paths.get(jTextField.getText());
     }
 
-    public GridBagConstraints pos(int x, int y, int width, int gridheight) {
+    public GridBagConstraints pos(int x, int y, int width, int height) {
         GridBagConstraints pos = pos(x, y);
         pos.gridwidth = width;
-        pos.gridheight = gridheight;
+        pos.gridheight = height;
         return pos;
     }
 
@@ -31,6 +31,4 @@ public class SwingUtil {
         pos.fill = GridBagConstraints.HORIZONTAL;
         return pos;
     }
-
-
 }
