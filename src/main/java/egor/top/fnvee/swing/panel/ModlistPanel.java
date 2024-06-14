@@ -28,7 +28,7 @@ public class ModlistPanel extends Panel {
     private final JList<Path> newMods = new JList<>() {{ setFont(SwingConstants.arial16); }};
     private final JButton newButton = new JButton("Скачанные архивы модов");
     private final JButton newButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
-    private final JButton newButtonAdd = new JButton("Добавить");
+    private final JButton newButtonAdd = new JButton("Установить") {{ setBackground(SwingConstants.green2); }};
 
     @Override
     public void postConstruct() {
@@ -36,18 +36,7 @@ public class ModlistPanel extends Panel {
 
         eButtonDel.addActionListener((ActionEvent e) -> pathService.deleteAndRefresh(eMods, eButton));
         newButtonDel.addActionListener((ActionEvent e) -> pathService.deleteAndRefresh(newMods, newButton));
-        newButtonAdd.addActionListener((ActionEvent e) -> {
-            if (!newMods.getSelectedValuesList().isEmpty()) {
-                newMods.getSelectedValuesList().forEach(path -> {
-                    var newFolder = pathService.createFolder(path);
-                    if (!pathService.unZipAndCopyToFolder(path, newFolder)) {
-                        pathService.delete(newFolder);
-                    } else {
-                        eButton.doClick();
-                    }
-                });
-            }
-        });
+        newButtonAdd.addActionListener((ActionEvent e) -> pathService.install(newMods, eButton));
 
         var ePanel = new JPanel();
         ePanel.setLayout(new GridBagLayout());
