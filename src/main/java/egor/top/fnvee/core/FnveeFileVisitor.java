@@ -38,8 +38,12 @@ public final class FnveeFileVisitor extends SimpleFileVisitor<Path> {
         log.info("found dir {}", Strings.dquote(dir.toString()));
 
         Path fnveeFolderPath = Paths.get(newFolder.toString(), fnveeFolder);
-        PathUtils.copy(dir, fnveeFolderPath);
-        PathUtils.delete(dir);
+        if (!dir.equals(fnveeFolderPath)) {
+            PathUtils.copy(dir, fnveeFolderPath);
+            PathUtils.delete(dir);
+        } else {
+            log.debug("dir already in root {}", Strings.dquote(dir.toString()));
+        }
 
         log.trace("skipping {}", Strings.dquote(dir.toString()));
         return FileVisitResult.SKIP_SUBTREE;

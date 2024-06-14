@@ -28,7 +28,10 @@ public class ModlistPanel extends Panel {
     private final JButton eButton = new JButton("Установленные Е-моды");
     private final JButton eButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
 
-    private final JList<Path> newMods = new JList<>() {{ setFont(SwingConstants.arial16); }};
+    private final JList<Path> newMods = new JList<>() {{
+        setFont(SwingConstants.arial16);
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }};
     private final JButton newButton = new JButton("Скачанные архивы модов");
     private final JButton newButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
     private final JButton newButtonAdd = new JButton("Установить") {{ setBackground(SwingConstants.green2); }};
@@ -42,7 +45,10 @@ public class ModlistPanel extends Panel {
     public void postConstruct() {
         setLayout(new GridLayout(5, 1));
 
-        eButtonDel.addActionListener((ActionEvent e) -> pathService.deleteAndRefresh(eMods, eButton));
+        eButtonDel.addActionListener((ActionEvent e) -> {
+            pathService.deleteAndRefresh(eMods, eButton);
+            eView.setListData(new Path[0]);
+        });
         newButtonDel.addActionListener((ActionEvent e) -> pathService.deleteAndRefresh(newMods, newButton));
         newButtonAdd.addActionListener((ActionEvent e) -> pathService.install(newMods, eButton));
 

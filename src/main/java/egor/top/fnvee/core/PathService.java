@@ -103,7 +103,7 @@ public class PathService {
             Files.walkFileTree(newFolder, new FnveeFileVisitor(newFolder));
             log.trace("+++ cleanup +++");
             Files.list(newFolder)
-                    .filter(path -> !StringUtils.endsWithAny(path.toString(), FnveeFileVisitor.fnveeFiles) && !StringUtils.endsWithAny(path.toString(), FnveeFileVisitor.fnveeFolders))
+                    .filter(path -> !StringUtils.endsWithAny(path.toString().toLowerCase(), FnveeFileVisitor.fnveeFiles) && !StringUtils.endsWithAny(path.toString().toLowerCase(), FnveeFileVisitor.fnveeFolders))
                     .forEach(PathUtils::delete);
             log.trace("--- cleanup ---");
         } catch (IOException e) {
