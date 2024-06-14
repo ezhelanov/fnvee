@@ -25,4 +25,9 @@ public class SwingConfig extends Config {
     public ImageIcon icon(ResourceLoader resourceLoader) throws IOException {
         return new ImageIcon(resourceLoader.getResource("assets/icon.png").getURL());
     }
+
+    @Bean
+    public ImageIcon header(ResourceLoader resourceLoader) throws IOException {
+        return new ImageIcon(resourceLoader.getResource("assets/header.png").getURL());
+    }
 }

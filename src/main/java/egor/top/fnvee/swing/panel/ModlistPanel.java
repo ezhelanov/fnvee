@@ -19,6 +19,8 @@ public class ModlistPanel extends Panel {
 
     @Autowired
     private PathService pathService;
+    @Autowired
+    private ImageIcon header;
 
     private final JList<Path> eMods = new JList<>() {{
         setFont(SwingConstants.arial16);
@@ -51,6 +53,8 @@ public class ModlistPanel extends Panel {
         });
         newButtonDel.addActionListener((ActionEvent e) -> pathService.deleteAndRefresh(newMods, newButton));
         newButtonAdd.addActionListener((ActionEvent e) -> pathService.install(newMods, eButton));
+
+        add(new JLabel(header));
 
         var ePanel = new JPanel();
         ePanel.setLayout(new GridBagLayout());
