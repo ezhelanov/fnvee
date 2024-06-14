@@ -31,4 +31,10 @@ public class SwingUtil {
         pos.fill = GridBagConstraints.HORIZONTAL;
         return pos;
     }
+
+    public JButton button() {
+        var button = new JButton("Временно отключена");
+        button.setEnabled(false);
+        return button;
+    }
 }

@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
+import java.util.Optional;
 
 @Component
 @Getter
@@ -21,6 +23,7 @@ public class ModlistPanel extends Panel {
     private final JList<Path> eMods = new JList<>() {{
         setFont(SwingConstants.arial16);
         setBackground(SwingConstants.green);
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }};
     private final JButton eButton = new JButton("Установленные Е-моды");
     private final JButton eButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
@@ -29,6 +32,11 @@ public class ModlistPanel extends Panel {
     private final JButton newButton = new JButton("Скачанные архивы модов");
     private final JButton newButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
     private final JButton newButtonAdd = new JButton("Установить") {{ setBackground(SwingConstants.green2); }};
+
+    private final JList<Path> eView = new JList<>() {{
+        setFont(SwingConstants.arial16);
+        setBackground(SwingConstants.orange);
+    }};
 
     @Override
     public void postConstruct() {
@@ -44,12 +52,29 @@ public class ModlistPanel extends Panel {
             setLayout(new GridLayout(5, 1));
             add(eButton);
             add(eButtonDel);
-            add(new JButton("1"));
-            add(new JButton("2"));
+            add(util.button());
+            add(util.button());
             add(new JButton("___________________________") {{ setEnabled(false); }});
         }});
         ePanel.add(new JScrollPane(eMods), util.pos(1, 0));
         add(ePanel);
+
+        var eViewerPanel = new JPanel();
+        eViewerPanel.setLayout(new GridBagLayout());
+        eViewerPanel.add(new JPanel() {{
+            setLayout(new GridLayout(5, 1));
+            add(util.button());
+            add(util.button());
+            add(util.button());
+            add(util.button());
+            add(new JButton("___________________________") {{ setEnabled(false); }});
+        }});
+        eViewerPanel.add(new JScrollPane(eView), util.pos(1, 0));
+        add(eViewerPanel);
+
+        eMods.addListSelectionListener(
+                (ListSelectionEvent e) -> Optional.ofNullable(eMods.getSelectedValue()).ifPresent(path -> eView.setListData(pathService.getPaths(path)))
+        );
 
         var newPanel = new JPanel();
         newPanel.setLayout(new GridBagLayout());
@@ -58,7 +83,7 @@ public class ModlistPanel extends Panel {
             add(newButton);
             add(newButtonDel);
             add(newButtonAdd);
-            add(new JButton("2"));
+            add(util.button());
             add(new JButton("___________________________") {{ setEnabled(false); }});
         }});
         newPanel.add(new JScrollPane(newMods), util.pos(1, 0));

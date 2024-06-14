@@ -35,6 +35,18 @@ public class PathService {
     @Autowired
     private UnZipService unZipService;
 
+    public Path[] getPaths(Path path) {
+        return Optional.ofNullable(path)
+                .map(path2 -> {
+                    try {
+                        return Files.list(path2).toArray(Path[]::new);
+                    } catch (IOException ex) {
+                        return null;
+                    }
+                })
+                .orElse(new Path[0]);
+    }
+
     public Path[] getPaths(Path path, boolean isFnvee) {
         return Optional.ofNullable(path)
                 .map(path1 -> isFnvee ? Paths.get(path1.toString(), mo2) : path1)
