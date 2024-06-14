@@ -1,7 +1,9 @@
 package egor.top.fnvee.core;
 
+import egor.top.fnvee.core.un.UnService;
 import egor.top.fnvee.swing.panel.PathsPanel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -16,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -33,7 +36,7 @@ public class PathService {
     @Autowired
     private PathsPanel pathsPanel;
     @Autowired
-    private UnZipService unZipService;
+    private Set<UnService> unServices;
 
     public Path[] getPaths(Path path) {
         return Optional.ofNullable(path)
@@ -114,7 +117,7 @@ public class PathService {
         }
         for (Path path : jList.getSelectedValuesList()) {
             var newFolder = createFolderForNewMod(path);
-            if (!unZipService.unZipAndCopyToFolder(path, newFolder)) {
+            if (!IterableUtils.matchesAny(unServices, unService -> unService.extractAndCopyToFolder(path, newFolder))) {
                 PathUtils.delete(newFolder);
             } else {
                 asFnvee(newFolder);

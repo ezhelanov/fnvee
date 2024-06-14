@@ -1,4 +1,4 @@
-package egor.top.fnvee.core;
+package egor.top.fnvee.core.un;
 
 import lombok.extern.slf4j.Slf4j;
 import net.lingala.zip4j.core.ZipFile;
@@ -13,9 +13,10 @@ import static egor.top.fnvee.core.PathService._zip;
 
 @Slf4j
 @Service
-public class UnZipService {
+public class UnZipService extends UnService {
 
-    public boolean unZipAndCopyToFolder(Path newMod, Path newFolder) {
+    @Override
+    public boolean extractAndCopyToFolder(Path newMod, Path newFolder) {
         if (ObjectUtils.anyNull(newMod, newFolder) || !StringUtils.endsWithIgnoreCase(newMod.toString(), _zip)) {
             return false;
         }
