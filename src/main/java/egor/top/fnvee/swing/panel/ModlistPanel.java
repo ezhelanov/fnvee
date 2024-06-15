@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.nio.file.Path;
@@ -37,10 +36,12 @@ public class ModlistPanel extends Panel {
     private final JButton newButton = new JButton("Скачанные архивы модов");
     private final JButton newButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
     private final JButton newButtonAdd = new JButton("Установить") {{ setBackground(SwingConstants.green2); }};
+    private final JButton backButton = new JButton("В корень мода");
 
     private final JList<Path> eView = new JList<>() {{
         setFont(SwingConstants.arial16);
         setBackground(SwingConstants.orange);
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }};
 
     @Override
@@ -73,7 +74,7 @@ public class ModlistPanel extends Panel {
         eViewerPanel.setLayout(new GridBagLayout());
         eViewerPanel.add(new JPanel() {{
             setLayout(new GridLayout(5, 1));
-            add(util.button());
+            add(backButton);
             add(util.button());
             add(util.button());
             add(util.button());
@@ -82,9 +83,9 @@ public class ModlistPanel extends Panel {
         eViewerPanel.add(new JScrollPane(eView), util.pos(1, 0));
         add(eViewerPanel);
 
-        eMods.addListSelectionListener(
-                (ListSelectionEvent e) -> Optional.ofNullable(eMods.getSelectedValue()).ifPresent(path -> eView.setListData(pathService.getPaths(path)))
-        );
+        eMods.addListSelectionListener(e -> Optional.ofNullable(eMods.getSelectedValue()).ifPresent(path -> eView.setListData(pathService.getPaths(path))));
+        eView.addListSelectionListener(e -> Optional.ofNullable(eView.getSelectedValue()).ifPresent(path -> eView.setListData(pathService.getPaths(path))));
+        backButton.addActionListener(e -> Optional.ofNullable(eMods.getSelectedValue()).ifPresent(path -> eView.setListData(pathService.getPaths(path))));
 
         var newPanel = new JPanel();
         newPanel.setLayout(new GridBagLayout());
