@@ -67,14 +67,11 @@ public class PathService {
     }
 
     public void deleteAndRefresh(JList<Path> jList, JButton jButton) {
-        if (ObjectUtils.anyNull(jList, jButton)) {
+        if (ObjectUtils.anyNull(jList, jList.getSelectedValue(), jButton)) {
             return;
         }
-        var selected = jList.getSelectedValuesList();
-        if (!selected.isEmpty()) {
-            selected.forEach(PathUtils::delete);
-            jButton.doClick();
-        }
+        PathUtils.delete(jList.getSelectedValue());
+        jButton.doClick();
     }
 
     private Path createFolderForNewMod(Path newMod) {
