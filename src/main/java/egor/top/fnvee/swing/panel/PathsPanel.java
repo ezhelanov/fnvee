@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -41,7 +40,7 @@ public class PathsPanel extends Panel {
         add(new JLabel("Расположение папки для скачивания", JLabel.LEFT), util.pos(0, 1));
         add(downloadText, util.pos(1, 1));
         add(checkButton, util.pos(0, 2, 2, 1));
-        checkButton.addActionListener((ActionEvent e) -> tryGetPath());
+        checkButton.addActionListener(e -> tryGetPath());
         tryGetPath();
     }
 

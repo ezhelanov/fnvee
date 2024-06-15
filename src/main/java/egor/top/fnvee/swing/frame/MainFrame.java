@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 @Slf4j
 @Component
@@ -39,12 +38,8 @@ public class MainFrame extends JFrame implements PostConstructable {
         add(pathsPanel, BorderLayout.NORTH);
         add(modlistPanel, BorderLayout.CENTER);
 
-        modlistPanel.getEButton().addActionListener(
-                (ActionEvent e) -> modlistPanel.getEMods().setListData(pathService.getPaths(pathsPanel.getFnveePath(), true))
-        );
-        modlistPanel.getNewButton().addActionListener(
-                (ActionEvent e) -> modlistPanel.getNewMods().setListData(pathService.getPaths(pathsPanel.getDownloadPath(), false))
-        );
+        modlistPanel.getEButton().addActionListener(e -> modlistPanel.getEMods().setListData(pathService.getPaths(pathsPanel.getFnveePath(), true)));
+        modlistPanel.getNewButton().addActionListener(e -> modlistPanel.getNewMods().setListData(pathService.getPaths(pathsPanel.getDownloadPath(), false)));
     }
 
 }

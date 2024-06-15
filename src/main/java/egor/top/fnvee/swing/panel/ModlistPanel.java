@@ -48,12 +48,12 @@ public class ModlistPanel extends Panel {
     public void postConstruct() {
         setLayout(new GridLayout(5, 1));
 
-        eButtonDel.addActionListener((ActionEvent e) -> {
+        eButtonDel.addActionListener(e -> {
             pathService.deleteAndRefresh(eMods, eButton);
             eView.setListData(new Path[0]);
         });
-        newButtonDel.addActionListener((ActionEvent e) -> pathService.deleteAndRefresh(newMods, newButton));
-        newButtonAdd.addActionListener((ActionEvent e) -> pathService.install(newMods, eButton));
+        newButtonDel.addActionListener(e -> pathService.deleteAndRefresh(newMods, newButton));
+        newButtonAdd.addActionListener(e -> pathService.install(newMods, eButton));
 
         add(new JLabel(header));
 
@@ -65,7 +65,7 @@ public class ModlistPanel extends Panel {
             add(eButtonDel);
             add(util.button());
             add(util.button());
-            add(new JButton("___________________________") {{ setEnabled(false); }});
+            add(util.buttonWide());
         }});
         ePanel.add(new JScrollPane(eMods), util.pos(1, 0));
         add(ePanel);
@@ -78,7 +78,7 @@ public class ModlistPanel extends Panel {
             add(util.button());
             add(util.button());
             add(util.button());
-            add(new JButton("___________________________") {{ setEnabled(false); }});
+            add(util.buttonWide());
         }});
         eViewerPanel.add(new JScrollPane(eView), util.pos(1, 0));
         add(eViewerPanel);
@@ -95,7 +95,7 @@ public class ModlistPanel extends Panel {
             add(newButtonDel);
             add(newButtonAdd);
             add(util.button());
-            add(new JButton("___________________________") {{ setEnabled(false); }});
+            add(util.buttonWide());
         }});
         newPanel.add(new JScrollPane(newMods), util.pos(1, 0));
         add(newPanel);

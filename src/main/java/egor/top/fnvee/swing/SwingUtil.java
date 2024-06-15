@@ -37,4 +37,9 @@ public class SwingUtil {
         button.setEnabled(false);
         return button;
     }
+    public JButton buttonWide() {
+        var button = button();
+        button.setText("___________________________");
+        return button;
+    }
 }
