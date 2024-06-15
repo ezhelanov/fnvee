@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -59,27 +58,13 @@ public class ModlistPanel extends Panel {
 
         var ePanel = new JPanel();
         ePanel.setLayout(new GridBagLayout());
-        ePanel.add(new JPanel() {{
-            setLayout(new GridLayout(5, 1));
-            add(eButton);
-            add(eButtonDel);
-            add(util.button());
-            add(util.button());
-            add(util.buttonWide());
-        }});
+        ePanel.add(util.fiveButtonsPanel(eButton, eButtonDel, util.button(), util.button()));
         ePanel.add(new JScrollPane(eMods), util.pos(1, 0));
         add(ePanel);
 
         var eViewerPanel = new JPanel();
         eViewerPanel.setLayout(new GridBagLayout());
-        eViewerPanel.add(new JPanel() {{
-            setLayout(new GridLayout(5, 1));
-            add(backButton);
-            add(util.button());
-            add(util.button());
-            add(util.button());
-            add(util.buttonWide());
-        }});
+        eViewerPanel.add(util.fiveButtonsPanel(backButton, util.button(), util.button(), util.button()));
         eViewerPanel.add(new JScrollPane(eView), util.pos(1, 0));
         add(eViewerPanel);
 
@@ -89,14 +74,7 @@ public class ModlistPanel extends Panel {
 
         var newPanel = new JPanel();
         newPanel.setLayout(new GridBagLayout());
-        newPanel.add(new JPanel() {{
-            setLayout(new GridLayout(5, 1));
-            add(newButton);
-            add(newButtonDel);
-            add(newButtonAdd);
-            add(util.button());
-            add(util.buttonWide());
-        }});
+        newPanel.add(util.fiveButtonsPanel(newButton, newButtonDel, newButtonAdd, util.button()));
         newPanel.add(new JScrollPane(newMods), util.pos(1, 0));
         add(newPanel);
     }

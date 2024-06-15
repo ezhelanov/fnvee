@@ -42,4 +42,15 @@ public class SwingUtil {
         button.setText("___________________________");
         return button;
     }
+
+    public JPanel fiveButtonsPanel(JButton b1, JButton b2, JButton b3, JButton b4) {
+        var panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 1));
+        panel.add(b1);
+        panel.add(b2);
+        panel.add(b3);
+        panel.add(b4);
+        panel.add(buttonWide());
+        return panel;
+    }
 }
