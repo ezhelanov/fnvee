@@ -61,7 +61,7 @@ public class ArchiveService {
                 if (archiveItem.isFolder()) continue;
 
                 ExtractOperationResult result = archiveItem.extractSlow(bytes -> {
-                    map.put(archiveItem.getPath(), new BufferedInputStream(new ByteArrayInputStream(bytes)));
+                    map.put(archiveItem.getPath(), new ByteArrayInputStream(bytes));
                     return bytes.length;
                 });
 
