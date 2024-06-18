@@ -20,7 +20,8 @@ public class UnRarService extends UnService {
             return false;
         }
 
-        return archiveService.extract(newMod, newFolder);
+        return false;
+        //return archiveService.extract(newMod, newFolder);
     }
 
 }
