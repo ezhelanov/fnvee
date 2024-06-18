@@ -41,9 +41,10 @@ public class PathService {
     public Path[] getPaths(Path path) {
         return Optional.ofNullable(path)
                 .map(path2 -> {
-                    try {
-                        return Files.list(path2).toArray(Path[]::new);
-                    } catch (IOException ex) {
+                    try(var stream = Files.list(path2)) {
+                        return stream.toArray(Path[]::new);
+                    } catch (Exception e) {
+                        log.error("[getPaths] cannot get paths", e);
                         return null;
                     }
                 })
@@ -54,12 +55,13 @@ public class PathService {
         return Optional.ofNullable(path)
                 .map(path1 -> isFnvee ? Paths.get(path1.toString(), mo2) : path1)
                 .map(path2 -> {
-                    try {
-                        return Files.list(path2)
+                    try(var stream = Files.list(path2)) {
+                        return stream
                                 .filter(path4 -> !isFnvee || Files.isDirectory(path4))
                                 .filter(path3 -> isFnvee ? path3.toString().startsWith(path2 + ePrefix) : StringUtils.endsWithAny(path3.toString(), _zip, _7z, _rar))
                                 .toArray(Path[]::new);
-                    } catch (IOException ex) {
+                    } catch (Exception e) {
+                        log.error("[getPaths] cannot get paths", e);
                         return null;
                     }
                 })
@@ -88,23 +90,31 @@ public class PathService {
                             .map(s -> StringUtils.prependIfMissing(s, ePrefix))
                             .orElseThrow(IOException::new)
             ));
-            log.info("created folder {}", Strings.dquote(newFolder.toString()));
+            log.info("[createFolderForNewMod] created folder {}", Strings.dquote(newFolder.toString()));
             return newFolder;
-        } catch (IOException e) {
-            throw new RuntimeException("cannot create folder", e);
+        } catch (Exception e) {
+            throw new RuntimeException("[createFolderForNewMod] cannot create folder", e);
         }
     }
 
     private void asFnvee(Path newFolder) {
         try {
             Files.walkFileTree(newFolder, new FnveeFileVisitor(newFolder));
-            log.trace("+++ cleanup +++");
-            Files.list(newFolder)
+            cleanup(newFolder);
+        } catch (Exception e) {
+            log.error("[asFnvee] cannot asFnvee", e);
+        }
+    }
+
+    private void cleanup(Path newFolder) {
+        log.trace("[cleanup] +++ cleanup +++");
+        try(var stream = Files.list(newFolder)) {
+            stream
                     .filter(path -> !StringUtils.endsWithAny(path.toString().toLowerCase(), FnveeFileVisitor.fnveeFiles) && !StringUtils.endsWithAny(path.toString().toLowerCase(), FnveeFileVisitor.fnveeFolders))
                     .forEach(PathUtils::delete);
-            log.trace("--- cleanup ---");
-        } catch (IOException e) {
-            log.error("cannot asFnvee", e);
+            log.trace("[cleanup] --- cleanup ---");
+        } catch (Exception e) {
+            log.error("[cleanup] cannot cleanup", e);
         }
     }
 
