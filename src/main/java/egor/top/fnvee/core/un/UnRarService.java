@@ -11,6 +11,7 @@ import static egor.top.fnvee.core.PathService._rar;
 
 @Slf4j
 @Service
+@Deprecated(forRemoval = true)
 public class UnRarService extends UnService {
 
     @Override

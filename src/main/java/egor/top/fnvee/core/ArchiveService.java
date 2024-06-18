@@ -29,20 +29,16 @@ public class ArchiveService {
         }
         try {
             var map = extract(newMod.toString());
-            map.forEach((location, is) -> {
-                Path newFile = Paths.get(newFolder.toString(), location);
-                try {
-                    FileUtils.createParentDirectories(newFile.toFile());
-                    Files.createFile(newFile);
-                    FileOutputStream fos = new FileOutputStream(newFile.toFile());
-                    is.transferTo(fos);
-                    fos.flush();
-                    is.close();
-                    fos.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            for (var entry : map.entrySet()) {
+                Path newFile = Paths.get(newFolder.toString(), entry.getKey());
+                FileUtils.createParentDirectories(newFile.toFile());
+                Files.createFile(newFile);
+                FileOutputStream fos = new FileOutputStream(newFile.toFile());
+                entry.getValue().transferTo(fos);
+                fos.flush();
+                entry.getValue().close();
+                fos.close();
+            }
             return true;
         } catch (IOException e) {
             e.printStackTrace();

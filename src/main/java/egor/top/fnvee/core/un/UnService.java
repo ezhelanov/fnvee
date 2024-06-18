@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.file.Path;
 
+@Deprecated(forRemoval = true)
 public abstract class UnService {
 
     @Autowired

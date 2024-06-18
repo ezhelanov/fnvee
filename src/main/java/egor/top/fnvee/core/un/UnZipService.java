@@ -13,6 +13,7 @@ import static egor.top.fnvee.core.PathService._zip;
 
 @Slf4j
 @Service
+@Deprecated(forRemoval = true)
 public class UnZipService extends UnService {
 
     @Override

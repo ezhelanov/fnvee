@@ -18,6 +18,7 @@ import static egor.top.fnvee.core.PathService._7z;
 
 @Slf4j
 @Service
+@Deprecated(forRemoval = true)
 public class Un7zService extends UnService {
 
     @Override
