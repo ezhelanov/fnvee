@@ -27,16 +27,20 @@ public class ArchiveService {
         if (ObjectUtils.anyNull(newMod, newFolder)) {
             return false;
         }
+        var map = extractToMap(newMod.toString());
         try {
-            var map = extract(newMod.toString());
             for (var entry : map.entrySet()) {
-                Path newFile = Paths.get(newFolder.toString(), entry.getKey());
+                final var path = entry.getKey();
+                final var is = entry.getValue();
+
+                Path newFile = Paths.get(newFolder.toString(), path);
                 FileUtils.createParentDirectories(newFile.toFile());
                 Files.createFile(newFile);
-                FileOutputStream fos = new FileOutputStream(newFile.toFile());
-                entry.getValue().transferTo(fos);
+
+                var fos = new FileOutputStream(newFile.toFile());
+                is.transferTo(fos);
                 fos.flush();
-                entry.getValue().close();
+                is.close();
                 fos.close();
             }
             return true;
@@ -46,27 +50,30 @@ public class ArchiveService {
         }
     }
 
-    private Map<String, InputStream> extract(String filePath) throws IOException {
-        Map<String, InputStream> extractedMap = new HashMap<>();
+    private Map<String, InputStream> extractToMap(String filePath) {
+        Map<String, InputStream> map = new HashMap<>();
 
-        RandomAccessFile randomAccessFile = new RandomAccessFile(filePath, RANDOM_ACCESS_FILE_MODE_READ);
-        RandomAccessFileInStream randomAccessFileStream = new RandomAccessFileInStream(randomAccessFile);
-        IInArchive inArchive = SevenZip.openInArchive(null, randomAccessFileStream);
+        try (
+                RandomAccessFileInStream rafis = new RandomAccessFileInStream(new RandomAccessFile(filePath, RANDOM_ACCESS_FILE_MODE_READ));
+                IInArchive archive = SevenZip.openInArchive(null, rafis)
+        ) {
+            for (ISimpleInArchiveItem archiveItem : archive.getSimpleInterface().getArchiveItems()) {
+                if (archiveItem.isFolder()) continue;
 
-        for (ISimpleInArchiveItem item : inArchive.getSimpleInterface().getArchiveItems()) {
-            if (!item.isFolder()) {
-                ExtractOperationResult result = item.extractSlow(data -> {
-                    extractedMap.put(item.getPath(), new BufferedInputStream(new ByteArrayInputStream(data)));
-                    return data.length;
+                ExtractOperationResult result = archiveItem.extractSlow(bytes -> {
+                    map.put(archiveItem.getPath(), new BufferedInputStream(new ByteArrayInputStream(bytes)));
+                    return bytes.length;
                 });
 
-                if (result != ExtractOperationResult.OK) {
-                    throw new RuntimeException(
-                            String.format("Error extracting archive. Extracting error: %s", result));
+                if (!ExtractOperationResult.OK.equals(result)) {
+                    throw new RuntimeException(String.format("Error extracting archive. Extracting error: %s", result));
                 }
             }
+        } catch (Exception e) {
+            log.error("[extractToMap] error", e);
+            map.clear();
         }
 
-        return extractedMap;
+        return map;
     }
 }
