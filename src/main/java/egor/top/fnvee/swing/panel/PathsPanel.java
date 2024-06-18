@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,14 +46,14 @@ public class PathsPanel extends Panel {
     }
 
     private void tryGetPath() {
-        log.trace("+++ tryGetPath +++");
+        log.trace("[tryGetPath] +++ tryGetPath +++");
 
         try {
             Path fnveePath = util.toPath(fnveeText);
             if (Files.isDirectory(fnveePath) && Files.exists(fnveePath)) {
                 fnveeText.setBackground(SwingConstants.green);
                 this.fnveePath = fnveePath;
-                log.info(fnveePath.toString());
+                log.info("[tryGetPath] fnvee {}", Strings.dquote(fnveePath.toString()));
             } else {
                 fnveeText.setBackground(SwingConstants.red);
             }
@@ -65,7 +66,7 @@ public class PathsPanel extends Panel {
             if (Files.isDirectory(downloadPath) && Files.exists(downloadPath)) {
                 downloadText.setBackground(SwingConstants.green);
                 this.downloadPath = downloadPath;
-                log.info(downloadPath.toString());
+                log.info("[tryGetPath] downloads {}", Strings.dquote(downloadPath.toString()));
             } else {
                 downloadText.setBackground(SwingConstants.red);
             }
@@ -73,7 +74,7 @@ public class PathsPanel extends Panel {
             downloadText.setBackground(SwingConstants.red);
         }
 
-        log.trace("--- tryGetPath ---");
+        log.trace("[tryGetPath] --- tryGetPath ---");
     }
 
 }

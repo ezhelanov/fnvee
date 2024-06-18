@@ -26,21 +26,19 @@ public class Un7zService extends UnService {
             return false;
         }
 
-        try (SevenZFile sevenZFile = new SevenZFile(newMod.toFile())) {
+        try (SevenZFile sevenZFile = SevenZFile.builder().setPath(newMod).get()) {
             SevenZArchiveEntry entry;
             while (Objects.nonNull(entry = sevenZFile.getNextEntry())) {
                 if (entry.isDirectory()) {
-                    log.trace("skipping entry {}", Strings.dquote(entry.getName()));
+                    log.trace("[un7z] skipping entry {}", Strings.dquote(entry.getName()));
                     continue;
                 }
-                log.debug("entry {}", Strings.dquote(entry.getName()));
+                log.trace("[un7z] entry {}", Strings.dquote(entry.getName()));
 
                 File curfile = new File(newFolder.toFile(), entry.getName());
                 File parent = curfile.getParentFile();
 
-                if (!parent.exists()) {
-                    parent.mkdirs();
-                }
+                if (!parent.exists()) parent.mkdirs();
 
                 FileOutputStream fos = new FileOutputStream(curfile);
                 byte[] bytes = new byte[(int) entry.getSize()];
@@ -50,7 +48,7 @@ public class Un7zService extends UnService {
             }
             return true;
         } catch (IOException e) {
-            log.error("cannot un7zip", e);
+            log.error("[un7z] cannot un7zip", e);
         }
 
         return false;

@@ -32,20 +32,20 @@ public final class FnveeFileVisitor extends SimpleFileVisitor<Path> {
                 fnveeFoldersSet, _fnveeFolder -> StringUtils.endsWithIgnoreCase(dir.toString(), _fnveeFolder)
         );
         if (Objects.isNull(fnveeFolder) || newFolder.equals(dir)) {
-            log.trace("opening {}", Strings.dquote(dir.toString()));
+            log.trace("[preVisitDir] opening {}", Strings.dquote(dir.toString()));
             return super.preVisitDirectory(dir, attrs);
         }
-        log.info("found dir {}", Strings.dquote(dir.toString()));
+        log.info("[preVisitDir] found dir {}", Strings.dquote(dir.toString()));
 
         Path fnveeFolderPath = Paths.get(newFolder.toString(), fnveeFolder);
         if (!dir.equals(fnveeFolderPath)) {
             PathUtils.copy(dir, fnveeFolderPath);
             PathUtils.delete(dir);
         } else {
-            log.debug("dir already in root {}", Strings.dquote(dir.toString()));
+            log.debug("[preVisitDir] dir already in root {}", Strings.dquote(dir.toString()));
         }
 
-        log.trace("skipping {}", Strings.dquote(dir.toString()));
+        log.trace("[preVisitDir] skipping {}", Strings.dquote(dir.toString()));
         return FileVisitResult.SKIP_SUBTREE;
     }
 
@@ -55,7 +55,7 @@ public final class FnveeFileVisitor extends SimpleFileVisitor<Path> {
                 .getName()
                 .toLowerCase(); // пример: 'somefile.esm'
         if (StringUtils.endsWithAny(fileName, fnveeFiles)) {
-            log.info("found file {}", Strings.dquote(file.toString()));
+            log.info("[visitFile] found file {}", Strings.dquote(file.toString()));
             Path fnveeFilePath = Paths.get(newFolder.toString(), fileName);
             PathUtils.copy(file, fnveeFilePath);
             PathUtils.delete(file);

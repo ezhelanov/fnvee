@@ -23,12 +23,12 @@ public class UnZipService extends UnService {
 
         try {
             ZipFile zipFile = new ZipFile(newMod.toFile());
-            log.trace("+++ unZipping +++");
+            log.trace("[unZip] +++ unZipping +++");
             zipFile.extractAll(newFolder.toString());
-            log.trace("--- unZipping ---");
+            log.trace("[unZip] --- unZipping ---");
             return true;
         } catch (ZipException e) {
-            log.error("cannot unzip", e);
+            log.error("[unZip] cannot unzip", e);
             return false;
         }
     }
