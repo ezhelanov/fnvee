@@ -53,8 +53,9 @@ public class ModlistPanel extends Panel {
         setLayout(new GridLayout(5, 1));
 
         eButtonDel.addActionListener(e -> {
-            pathService.deleteAndRefresh(eMods, eButton);
-            eView.setListData(new Path[0]);
+            if (pathService.deleteAndRefresh(eMods, eButton)) {
+                eView.setListData(new Path[0]);
+            }
         });
         newButtonDel.addActionListener(e -> pathService.deleteAndRefresh(newMods, newButton));
         newButtonAdd.addActionListener(e -> pathService.install(newMods, eButton));

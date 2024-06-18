@@ -1,6 +1,7 @@
 package egor.top.fnvee.core;
 
 import egor.top.fnvee.core.un.UnService;
+import egor.top.fnvee.swing.SwingUtil;
 import egor.top.fnvee.swing.panel.PathsPanel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IterableUtils;
@@ -37,6 +38,8 @@ public class PathService {
     private PathsPanel pathsPanel;
     @Autowired
     private Set<UnService> unServices;
+    @Autowired
+    private SwingUtil swingUtil;
 
     public Path[] getPaths(Path path) {
         return Optional.ofNullable(path)
@@ -68,12 +71,16 @@ public class PathService {
                 .orElse(new Path[0]);
     }
 
-    public void deleteAndRefresh(JList<Path> jList, JButton jButton) {
+    public boolean deleteAndRefresh(JList<Path> jList, JButton jButton) {
         if (ObjectUtils.anyNull(jList, jList.getSelectedValue(), jButton)) {
-            return;
+            return false;
         }
-        PathUtils.delete(jList.getSelectedValue());
-        jButton.doClick();
+        if (swingUtil.isDelete(jList.getSelectedValue())) {
+            PathUtils.delete(jList.getSelectedValue());
+            jButton.doClick();
+            return true;
+        }
+        return false;
     }
 
     private Path createFolderForNewMod(Path newMod) {

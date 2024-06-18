@@ -1,5 +1,7 @@
 package egor.top.fnvee.swing;
 
+import org.apache.logging.log4j.util.Strings;
+import org.slf4j.helpers.MessageFormatter;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -7,6 +9,7 @@ import java.awt.*;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 @Component
 public class SwingUtil {
@@ -52,5 +55,19 @@ public class SwingUtil {
         panel.add(b4);
         panel.add(buttonWide());
         return panel;
+    }
+
+    public boolean isDelete(Path path) {
+        if (Objects.isNull(path)) {
+            return false;
+        }
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                MessageFormatter.format("Удалить {} ?", Strings.dquote(path.toString())).getMessage(),
+                SwingConstants.deletion,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.ERROR_MESSAGE
+        );
+        return result == 0;
     }
 }

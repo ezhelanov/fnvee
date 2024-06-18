@@ -42,11 +42,14 @@
       <artifactId>commons-collections4</artifactId>
       <version>4.4</version>
     </dependency>
+    <!-- zip -->
     <dependency>
       <groupId>net.lingala.zip4j</groupId>
       <artifactId>zip4j</artifactId>
       <version>1.3.2</version>
     </dependency>
+    <!-- ___ -->
+    <!-- 7z -->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>
@@ -57,7 +60,7 @@
       <artifactId>xz</artifactId>
       <version>1.9</version>
     </dependency>
-
+    <!-- __ -->
 
   </dependencies>
 
