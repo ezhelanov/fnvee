@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -123,17 +124,16 @@ public class PathService {
     }
 
     public void install(JList<Path> jList, JButton jButton) {
-        if (ObjectUtils.anyNull(jList, jButton) || jList.getSelectedValuesList().isEmpty()) {
+        if (ObjectUtils.anyNull(jList, jButton) || Objects.isNull(jList.getSelectedValue())) {
             return;
         }
-        for (Path path : jList.getSelectedValuesList()) {
-            var newFolder = createFolderForNewMod(path);
-            if (!installService.install(path, newFolder)) {
-                PathUtils.delete(newFolder);
-            } else {
-                asFnvee(newFolder);
-                jButton.doClick();
-            }
+
+        var newFolder = createFolderForNewMod(jList.getSelectedValue());
+        if (!installService.install(jList.getSelectedValue(), newFolder)) {
+            PathUtils.delete(newFolder);
+        } else {
+            asFnvee(newFolder);
+            jButton.doClick();
         }
     }
 
