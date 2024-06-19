@@ -38,8 +38,16 @@ public class MainFrame extends JFrame implements PostConstructable {
         add(pathsPanel, BorderLayout.NORTH);
         add(modlistPanel, BorderLayout.CENTER);
 
-        modlistPanel.getEButton().addActionListener(e -> modlistPanel.getEMods().setListData(pathService.getPaths(pathsPanel.getFnveePath(), true)));
-        modlistPanel.getNewButton().addActionListener(e -> modlistPanel.getNewMods().setListData(pathService.getPaths(pathsPanel.getDownloadPath(), false)));
+        modlistPanel.getEButton()
+                .addActionListener(
+                        e -> modlistPanel.getEMods()
+                                .setListData(pathService.getPaths(pathsPanel.getFnveePath(), true))
+                );
+        modlistPanel.getNewButton()
+                .addActionListener(
+                        e -> modlistPanel.getNewMods()
+                                .setListData(pathService.getPaths(pathsPanel.getDownloadPath(), false))
+                );
     }
 
 }

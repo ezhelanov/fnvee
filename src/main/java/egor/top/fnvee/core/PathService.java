@@ -147,7 +147,7 @@ public class PathService {
         }
     }
 
-    public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd) {
+    public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd, JProgressBar newProgressBar) {
         if (ObjectUtils.anyNull(newMod, eButton, newButtonAdd)) {
             return null;
         }
@@ -158,6 +158,7 @@ public class PathService {
             return null;
         }
         newButtonAdd.setEnabled(false);
+        newProgressBar.setIndeterminate(true);
 
         return new SwingWorker<>() {
             @Override
@@ -176,6 +177,7 @@ public class PathService {
                         eButton.doClick();
                     }
                     newButtonAdd.setEnabled(true);
+                    newProgressBar.setIndeterminate(false);
                 } catch (InterruptedException | ExecutionException e) {
                     log.error("error", e);
                 }

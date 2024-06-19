@@ -44,6 +44,7 @@ public class ModlistPanel extends Panel {
     private final JButton newButtonAdd = new JButton("Установить") {{
         setBackground(SwingConstants.green2);
     }};
+    private final JProgressBar newProgressBar = new JProgressBar();
     private final JButton backButton = new JButton("Назад");
     private Path viewPath;
     private final JButton rootButton = new JButton("В корень мода");
@@ -66,7 +67,7 @@ public class ModlistPanel extends Panel {
         newButtonDel.addActionListener(e -> pathService.deleteAndRefresh(newMods, newButton));
         newButtonAdd.addActionListener(
                 e -> Optional.ofNullable(newMods.getSelectedValue())
-                        .map(newMod -> pathService.getWorker(newMod, eButton, newButtonAdd))
+                        .map(newMod -> pathService.getWorker(newMod, eButton, newButtonAdd, newProgressBar))
                         .ifPresent(SwingWorker::execute)
         );
 
@@ -107,7 +108,7 @@ public class ModlistPanel extends Panel {
         // скачанные архивы модов
         var newPanel = new JPanel();
         newPanel.setLayout(new GridBagLayout());
-        newPanel.add(util.fiveButtonsPanel(newButton, newButtonDel, newButtonAdd, util.button()));
+        newPanel.add(util.fiveButtonsPanel(newButton, newButtonDel, newButtonAdd, newProgressBar));
         newPanel.add(new JScrollPane(newMods), util.pos(1, 0));
         add(newPanel);
     }

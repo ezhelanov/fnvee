@@ -46,7 +46,7 @@ public class SwingUtil {
         return button;
     }
 
-    public JPanel fiveButtonsPanel(JButton b1, JButton b2, JButton b3, JButton b4) {
+    public JPanel fiveButtonsPanel(JComponent b1, JComponent b2, JComponent b3, JComponent b4) {
         var panel = new JPanel();
         panel.setLayout(new GridLayout(5, 1));
         panel.add(b1);
