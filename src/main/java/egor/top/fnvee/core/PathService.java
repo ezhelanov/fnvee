@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Service
@@ -126,6 +127,7 @@ public class PathService {
         }
     }
 
+    @Deprecated
     public void install(JList<Path> newMods, JButton eButton) {
         if (ObjectUtils.anyNull(newMods, eButton) || Objects.isNull(newMods.getSelectedValue())) {
             return;
@@ -138,6 +140,43 @@ public class PathService {
             asFnvee(newFolder);
             eButton.doClick();
         }
+    }
+
+    public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd) {
+        if (ObjectUtils.anyNull(newMod, eButton, newButtonAdd)) {
+            return new SwingWorker<>() {
+                @Override
+                protected Boolean doInBackground() throws Exception {
+                    return false;
+                }
+            };
+        }
+
+        final var newFolder = createFolderForNewMod(newMod);
+        newButtonAdd.setEnabled(false);
+
+        return new SwingWorker<>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                return IterableUtils.matchesAny(unServices, unService -> unService.extractAndCopyToFolder(newMod, newFolder));
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean installed = get();
+                    if (!installed) {
+                        PathUtils.delete(newFolder);
+                    } else {
+                        asFnvee(newFolder);
+                        eButton.doClick();
+                    }
+                    newButtonAdd.setEnabled(true);
+                } catch (InterruptedException | ExecutionException e) {
+                    log.error("error", e);
+                }
+            }
+        };
     }
 
 }

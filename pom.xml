@@ -24,11 +24,13 @@
   </properties>
 
   <repositories>
+    <!-- rar -->
     <repository>
       <id>AsposeJavaAPI</id>
       <name>Aspose Java API</name>
       <url>https://releases.aspose.com/java/repo/</url>
     </repository>
+    <!-- ___ -->
   </repositories>
 
   <dependencies>

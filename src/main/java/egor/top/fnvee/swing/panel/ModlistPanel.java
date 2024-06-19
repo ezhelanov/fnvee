@@ -29,15 +29,21 @@ public class ModlistPanel extends Panel {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }};
     private final JButton eButton = new JButton("Установленные Е-моды");
-    private final JButton eButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
+    private final JButton eButtonDel = new JButton("Удалить") {{
+        setBackground(SwingConstants.red);
+    }};
 
     private final JList<Path> newMods = new JList<>() {{
         setFont(SwingConstants.arial16);
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }};
     private final JButton newButton = new JButton("Скачанные архивы модов");
-    private final JButton newButtonDel = new JButton("Удалить") {{ setBackground(SwingConstants.red); }};
-    private final JButton newButtonAdd = new JButton("Установить") {{ setBackground(SwingConstants.green2); }};
+    private final JButton newButtonDel = new JButton("Удалить") {{
+        setBackground(SwingConstants.red);
+    }};
+    private final JButton newButtonAdd = new JButton("Установить") {{
+        setBackground(SwingConstants.green2);
+    }};
     private final JButton backButton = new JButton("Назад");
     private Path viewPath;
     private final JButton rootButton = new JButton("В корень мода");
@@ -58,7 +64,11 @@ public class ModlistPanel extends Panel {
             }
         });
         newButtonDel.addActionListener(e -> pathService.deleteAndRefresh(newMods, newButton));
-        newButtonAdd.addActionListener(e -> pathService.install(newMods, eButton));
+        newButtonAdd.addActionListener(
+                e -> Optional.ofNullable(newMods.getSelectedValue())
+                        .map(newMod -> pathService.getWorker(newMod, eButton, newButtonAdd))
+                        .ifPresent(SwingWorker::execute)
+        );
 
         add(new JLabel(header));
 
