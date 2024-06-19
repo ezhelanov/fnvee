@@ -23,6 +23,14 @@
     <java.version>11</java.version>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>AsposeJavaAPI</id>
+      <name>Aspose Java API</name>
+      <url>https://releases.aspose.com/java/repo/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -66,6 +74,11 @@
       <groupId>com.github.junrar</groupId>
       <artifactId>junrar</artifactId>
       <version>0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aspose</groupId>
+      <artifactId>aspose-zip</artifactId>
+      <version>24.3</version>
     </dependency>
     <!-- ___ -->
   </dependencies>
