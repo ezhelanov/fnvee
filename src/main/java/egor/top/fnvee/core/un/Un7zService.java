@@ -18,7 +18,6 @@ import static egor.top.fnvee.core.PathService._7z;
 
 @Slf4j
 @Service
-@Deprecated(forRemoval = true)
 public class Un7zService extends UnService {
 
     @Override
@@ -29,6 +28,7 @@ public class Un7zService extends UnService {
 
         try (SevenZFile sevenZFile = SevenZFile.builder().setPath(newMod).get()) {
             SevenZArchiveEntry entry;
+            log.trace("[un7z] +++ un7z +++");
             while (Objects.nonNull(entry = sevenZFile.getNextEntry())) {
                 if (entry.isDirectory()) {
                     log.trace("[un7z] skipping entry {}", Strings.dquote(entry.getName()));
@@ -47,6 +47,7 @@ public class Un7zService extends UnService {
                 fos.write(bytes);
                 fos.close();
             }
+            log.trace("[un7z] --- un7z ---");
             return true;
         } catch (IOException e) {
             log.error("[un7z] cannot un7zip", e);

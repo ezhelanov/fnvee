@@ -13,7 +13,6 @@ import static egor.top.fnvee.core.PathService._zip;
 
 @Slf4j
 @Service
-@Deprecated(forRemoval = true)
 public class UnZipService extends UnService {
 
     @Override
@@ -24,9 +23,9 @@ public class UnZipService extends UnService {
 
         try {
             ZipFile zipFile = new ZipFile(newMod.toFile());
-            log.trace("[unZip] +++ unZipping +++");
+            log.trace("[unZip] +++ unZip +++");
             zipFile.extractAll(newFolder.toString());
-            log.trace("[unZip] --- unZipping ---");
+            log.trace("[unZip] --- unZip ---");
             return true;
         } catch (ZipException e) {
             log.error("[unZip] cannot unzip", e);

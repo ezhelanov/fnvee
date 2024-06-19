@@ -16,18 +16,11 @@ public class InstallService {
 
     @Autowired
     private Set<UnService> unServices;
-    @Autowired
-    private ArchiveService archiveService;
 
-    @Deprecated
     public boolean install(Path newMod, Path newFolder) {
         if (ObjectUtils.anyNull(newMod, newFolder)) {
             return false;
         }
         return IterableUtils.matchesAny(unServices, unService -> unService.extractAndCopyToFolder(newMod, newFolder));
-    }
-
-    public boolean installUniversal(Path newMod, Path newFolder) {
-        return archiveService.extract(newMod, newFolder);
     }
 }

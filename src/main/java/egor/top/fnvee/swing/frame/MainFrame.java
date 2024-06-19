@@ -32,7 +32,7 @@ public class MainFrame extends JFrame implements PostConstructable {
         setSize(dimension.width / 2, dimension.height);
         setLocation(dimension.width / 4, 0);
         setResizable(Boolean.FALSE);
-        setTitle("FNVEE+ by e_ropka");
+        setTitle("FNVEE+ by EG0RKAP0MID0RKA");
         setIconImage(icon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(pathsPanel, BorderLayout.NORTH);
