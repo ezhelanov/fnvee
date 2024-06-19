@@ -1,8 +1,10 @@
 package egor.top.fnvee.core;
 
+import egor.top.fnvee.core.un.UnService;
 import egor.top.fnvee.swing.SwingUtil;
 import egor.top.fnvee.swing.panel.PathsPanel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -18,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -35,7 +38,7 @@ public class PathService {
     @Autowired
     private PathsPanel pathsPanel;
     @Autowired
-    private InstallService installService;
+    private Set<UnService> unServices;
     @Autowired
     private SwingUtil swingUtil;
 
@@ -123,17 +126,17 @@ public class PathService {
         }
     }
 
-    public void install(JList<Path> jList, JButton jButton) {
-        if (ObjectUtils.anyNull(jList, jButton) || Objects.isNull(jList.getSelectedValue())) {
+    public void install(JList<Path> newMods, JButton eButton) {
+        if (ObjectUtils.anyNull(newMods, eButton) || Objects.isNull(newMods.getSelectedValue())) {
             return;
         }
 
-        var newFolder = createFolderForNewMod(jList.getSelectedValue());
-        if (!installService.install(jList.getSelectedValue(), newFolder)) {
+        var newFolder = createFolderForNewMod(newMods.getSelectedValue());
+        if (!IterableUtils.matchesAny(unServices, unService -> unService.extractAndCopyToFolder(newMods.getSelectedValue(), newFolder))) {
             PathUtils.delete(newFolder);
         } else {
             asFnvee(newFolder);
-            jButton.doClick();
+            eButton.doClick();
         }
     }
 
