@@ -27,7 +27,7 @@ public class UnRarService extends UnService {
             log.trace("[unRar] --- unRar ---");
             return true;
         } catch (Exception e) {
-            log.trace("[unRar] error", e);
+            log.error("[unRar] cannot unRar", e);
         }
 
         return false;

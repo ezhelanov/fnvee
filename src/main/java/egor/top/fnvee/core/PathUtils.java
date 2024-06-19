@@ -2,6 +2,7 @@ package egor.top.fnvee.core;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.util.FileSystemUtils;
 
@@ -33,6 +34,16 @@ public class PathUtils {
         } catch (IOException e) {
             log.error("[copy] cannot copy", e);
         }
+    }
+
+    public boolean equalsIgnoreCase(Path path1, Path path2) {
+        return StringUtils.equalsIgnoreCase(toString(path1), toString(path2));
+    }
+
+    public String toString(Path path) {
+        return Optional.ofNullable(path)
+                .map(Path::toString)
+                .orElse(null);
     }
 
 }

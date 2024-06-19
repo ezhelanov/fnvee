@@ -38,7 +38,7 @@ public final class FnveeFileVisitor extends SimpleFileVisitor<Path> {
         log.info("[preVisitDir] found dir {}", Strings.dquote(dir.toString()));
 
         Path fnveeFolderPath = Paths.get(newFolder.toString(), fnveeFolder);
-        if (!dir.equals(fnveeFolderPath)) {
+        if (!PathUtils.equalsIgnoreCase(dir, fnveeFolderPath)) {
             PathUtils.copy(dir, fnveeFolderPath);
             PathUtils.delete(dir);
         } else {
@@ -57,8 +57,10 @@ public final class FnveeFileVisitor extends SimpleFileVisitor<Path> {
         if (StringUtils.endsWithAny(fileName, fnveeFiles)) {
             log.info("[visitFile] found file {}", Strings.dquote(file.toString()));
             Path fnveeFilePath = Paths.get(newFolder.toString(), fileName);
-            PathUtils.copy(file, fnveeFilePath);
-            PathUtils.delete(file);
+            if (!PathUtils.equalsIgnoreCase(file, fnveeFilePath)) {
+                PathUtils.copy(file, fnveeFilePath);
+                PathUtils.delete(file);
+            }
         }
         return super.visitFile(file, attrs);
     }

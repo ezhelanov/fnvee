@@ -28,7 +28,7 @@ public class UnZipService extends UnService {
             log.trace("[unZip] --- unZip ---");
             return true;
         } catch (ZipException e) {
-            log.error("[unZip] cannot unzip", e);
+            log.error("[unZip] cannot unZip", e);
             return false;
         }
     }

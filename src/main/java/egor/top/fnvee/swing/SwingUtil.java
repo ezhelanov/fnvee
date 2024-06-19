@@ -66,7 +66,7 @@ public class SwingUtil {
                 MessageFormatter.format("Удалить {} ?", Strings.dquote(path.toString())).getMessage(),
                 SwingConstants.deletion,
                 JOptionPane.YES_NO_OPTION,
-                JOptionPane.ERROR_MESSAGE
+                JOptionPane.WARNING_MESSAGE
         );
         return result == 0;
     }

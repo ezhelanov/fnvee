@@ -50,7 +50,7 @@ public class Un7zService extends UnService {
             log.trace("[un7z] --- un7z ---");
             return true;
         } catch (IOException e) {
-            log.error("[un7z] cannot un7zip", e);
+            log.error("[un7z] cannot un7z", e);
         }
 
         return false;
