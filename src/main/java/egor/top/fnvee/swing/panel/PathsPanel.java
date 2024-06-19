@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.devtools.filewatch.FileSystemWatcher;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
@@ -27,6 +28,9 @@ public class PathsPanel extends Panel {
     @Autowired
     private JTextField downloadText;
     private Path downloadPath;
+    private boolean isWatcherEnabled;
+    @Autowired
+    private FileSystemWatcher watcher;
 
     @Setter(AccessLevel.NONE)
     private final JButton checkButton = new JButton("Проверить");
@@ -67,6 +71,12 @@ public class PathsPanel extends Panel {
                 downloadText.setBackground(SwingConstants.green);
                 this.downloadPath = downloadPath;
                 log.info("[tryGetPath] downloads {}", Strings.dquote(downloadPath.toString()));
+                if (!isWatcherEnabled) {
+                    watcher.addSourceDirectory(downloadPath.toFile());
+                    watcher.start();
+                    isWatcherEnabled = true;
+                    log.info("[tryGetPath] watcher enabled");
+                }
             } else {
                 downloadText.setBackground(SwingConstants.red);
             }

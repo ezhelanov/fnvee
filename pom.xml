@@ -83,6 +83,10 @@
       <version>24.3</version>
     </dependency>
     <!-- ___ -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
