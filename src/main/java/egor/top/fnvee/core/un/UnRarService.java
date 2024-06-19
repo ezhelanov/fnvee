@@ -1,5 +1,6 @@
 package egor.top.fnvee.core.un;
 
+import com.github.junrar.extract.ExtractArchive;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,7 +12,6 @@ import static egor.top.fnvee.core.PathService._rar;
 
 @Slf4j
 @Service
-@Deprecated(forRemoval = true)
 public class UnRarService extends UnService {
 
     @Override
@@ -20,8 +20,17 @@ public class UnRarService extends UnService {
             return false;
         }
 
+        try {
+            log.trace("[unRar] +++ unRar +++");
+            ExtractArchive extractArchive = new ExtractArchive();
+            extractArchive.extractArchive(newMod.toFile(), newFolder.toFile());
+            log.trace("[unRar] --- unRar ---");
+            return true;
+        } catch (Exception e) {
+            log.trace("[unRar] error", e);
+        }
+
         return false;
-        //return archiveService.extract(newMod, newFolder);
     }
 
 }
