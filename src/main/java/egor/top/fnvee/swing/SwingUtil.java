@@ -70,4 +70,16 @@ public class SwingUtil {
         );
         return result == 0;
     }
+
+    public void alreadyInstalled(Path path) {
+        if (Objects.isNull(path)) {
+            return;
+        }
+        JOptionPane.showMessageDialog(
+                null,
+                MessageFormatter.format("Мод {} уже установлен !", Strings.dquote(path.toString())).getMessage(),
+                SwingConstants.installation,
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
 }

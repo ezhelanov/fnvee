@@ -102,8 +102,9 @@ public class PathService {
             log.info("[createFolderForNewMod] created folder {}", Strings.dquote(newFolder.toString()));
             return newFolder;
         } catch (Exception e) {
-            throw new RuntimeException("[createFolderForNewMod] cannot create folder", e);
+            log.error("[createFolderForNewMod] cannot create folder", e);
         }
+        return null;
     }
 
     private void asFnvee(Path newFolder) {
@@ -134,6 +135,10 @@ public class PathService {
         }
 
         var newFolder = createFolderForNewMod(newMods.getSelectedValue());
+        if (Objects.isNull(newFolder)) {
+            swingUtil.alreadyInstalled(newMods.getSelectedValue());
+            return;
+        }
         if (!IterableUtils.matchesAny(unServices, unService -> unService.extractAndCopyToFolder(newMods.getSelectedValue(), newFolder))) {
             PathUtils.delete(newFolder);
         } else {
@@ -144,15 +149,14 @@ public class PathService {
 
     public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd) {
         if (ObjectUtils.anyNull(newMod, eButton, newButtonAdd)) {
-            return new SwingWorker<>() {
-                @Override
-                protected Boolean doInBackground() throws Exception {
-                    return false;
-                }
-            };
+            return null;
         }
 
         final var newFolder = createFolderForNewMod(newMod);
+        if (Objects.isNull(newFolder)) {
+            swingUtil.alreadyInstalled(newMod);
+            return null;
+        }
         newButtonAdd.setEnabled(false);
 
         return new SwingWorker<>() {

@@ -5,6 +5,7 @@ import java.awt.*;
 public interface SwingConstants {
 
     String deletion = "Удаление";
+    String installation = "Установка";
 
     Color green = new Color(212, 229, 214, 255);
     Color green2 = new Color(94, 227, 107, 255);
