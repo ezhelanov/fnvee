@@ -41,11 +41,11 @@ public class Un7zService extends UnService {
 
                 if (!parent.exists()) parent.mkdirs();
 
-                FileOutputStream fos = new FileOutputStream(curfile);
-                byte[] bytes = new byte[(int) entry.getSize()];
-                sevenZFile.read(bytes, 0, bytes.length);
-                fos.write(bytes);
-                fos.close();
+                try (FileOutputStream fos = new FileOutputStream(curfile)) {
+                    byte[] bytes = new byte[(int) entry.getSize()];
+                    sevenZFile.read(bytes, 0, bytes.length);
+                    fos.write(bytes);
+                }
             }
             log.trace("[un7z] --- un7z ---");
             return true;
