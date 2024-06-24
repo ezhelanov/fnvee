@@ -147,7 +147,7 @@ public class PathService {
         }
     }
 
-    public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd, JProgressBar newProgressBar) {
+    public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd, JProgressBar newProgressBar, JList<Path> eMods) {
         if (ObjectUtils.anyNull(newMod, eButton, newButtonAdd)) {
             return null;
         }
@@ -175,6 +175,7 @@ public class PathService {
                     } else {
                         asFnvee(newFolder);
                         eButton.doClick();
+                        eMods.setSelectedValue(newFolder, true);
                     }
                     newButtonAdd.setEnabled(true);
                     newProgressBar.setIndeterminate(false);

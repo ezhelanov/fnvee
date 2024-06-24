@@ -67,7 +67,7 @@ public class ModlistPanel extends Panel {
         newButtonDel.addActionListener(e -> pathService.deleteAndRefresh(newMods, newButton));
         newButtonAdd.addActionListener(
                 e -> Optional.ofNullable(newMods.getSelectedValue())
-                        .map(newMod -> pathService.getWorker(newMod, eButton, newButtonAdd, newProgressBar))
+                        .map(newMod -> pathService.getWorker(newMod, eButton, newButtonAdd, newProgressBar, eMods))
                         .ifPresent(SwingWorker::execute)
         );
 
