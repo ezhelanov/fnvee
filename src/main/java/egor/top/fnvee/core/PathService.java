@@ -178,6 +178,9 @@ public class PathService {
                     }
                     newButtonAdd.setEnabled(true);
                     newProgressBar.setIndeterminate(false);
+                    if (!installed) {
+                        swingUtil.cannotInstall(newMod);
+                    }
                 } catch (InterruptedException | ExecutionException e) {
                     log.error("error", e);
                 }

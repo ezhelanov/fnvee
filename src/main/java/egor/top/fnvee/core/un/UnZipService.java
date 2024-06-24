@@ -29,8 +29,9 @@ public class UnZipService extends UnService {
             return true;
         } catch (ZipException e) {
             log.error("[unZip] cannot unZip", e);
-            return false;
         }
+
+        return false;
     }
 
 }

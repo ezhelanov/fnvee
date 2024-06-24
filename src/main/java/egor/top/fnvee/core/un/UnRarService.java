@@ -35,6 +35,7 @@ public class UnRarService extends UnService {
 
     private boolean extractAndCopyToFolderViaAspose(Path newMod, Path newFolder) {
         log.trace("[unRar: aspose] +++ unRar +++");
+
         try (RarArchive archive = new RarArchive(newMod.toString())) {
             archive.extractToDirectory(newFolder.toString());
             log.trace("[unRar: aspose] --- unRar ---");
@@ -42,6 +43,7 @@ public class UnRarService extends UnService {
         } catch (Exception e) {
             log.error("[unRar: aspose] cannot unRar", e);
         }
+
         return false;
     }
 

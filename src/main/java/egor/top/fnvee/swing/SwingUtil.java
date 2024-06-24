@@ -82,4 +82,16 @@ public class SwingUtil {
                 JOptionPane.INFORMATION_MESSAGE
         );
     }
+
+    public void cannotInstall(Path path) {
+        if (Objects.isNull(path)) {
+            return;
+        }
+        JOptionPane.showMessageDialog(
+                null,
+                MessageFormatter.format("Не удалось установить мод {} !", Strings.dquote(path.toString())).getMessage(),
+                SwingConstants.installation,
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
 }
