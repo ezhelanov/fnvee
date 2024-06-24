@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -102,7 +103,11 @@ public class PathService {
             log.info("[createFolderForNewMod] created folder {}", Strings.dquote(newFolder.toString()));
             return newFolder;
         } catch (Exception e) {
-            log.error("[createFolderForNewMod] cannot create folder", e);
+            if (e instanceof FileAlreadyExistsException && Objects.nonNull(newMod)) {
+                log.warn("[createFolderForNewMod] folder already exists for mod {}", Strings.dquote(newMod.toString()));
+            } else {
+                log.error("[createFolderForNewMod] cannot create folder", e);
+            }
         }
         return null;
     }
