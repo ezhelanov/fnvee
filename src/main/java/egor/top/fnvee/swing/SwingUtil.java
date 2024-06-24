@@ -94,4 +94,18 @@ public class SwingUtil {
                 JOptionPane.ERROR_MESSAGE
         );
     }
+
+    public boolean isInstall(Path path) {
+        if (Objects.isNull(path)) {
+            return false;
+        }
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                MessageFormatter.format("Установить мод {} ? Может занять некоторое время", Strings.dquote(path.toString())).getMessage(),
+                SwingConstants.installation,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+        return result == 0;
+    }
 }

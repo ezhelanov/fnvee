@@ -148,7 +148,7 @@ public class PathService {
     }
 
     public SwingWorker<Boolean, Void> getWorker(Path newMod, JButton eButton, JButton newButtonAdd, JProgressBar newProgressBar, JList<Path> eMods) {
-        if (ObjectUtils.anyNull(newMod, eButton, newButtonAdd)) {
+        if (ObjectUtils.anyNull(newMod, eButton, newButtonAdd) || !swingUtil.isInstall(newMod)) {
             return null;
         }
 
