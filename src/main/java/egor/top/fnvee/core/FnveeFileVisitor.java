@@ -20,7 +20,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public final class FnveeFileVisitor extends SimpleFileVisitor<Path> {
 
-    public static final String[] fnveeFolders = new String[]{"textures", "meshes", "config", "nvse", "menus"};
+    public static final String[] fnveeFolders = new String[]{"textures", "meshes", "config", "nvse", "menus", "sound"};
     public static final Set<String> fnveeFoldersSet = SetUtils.hashSet(fnveeFolders);
     public static final String[] fnveeFiles = new String[]{".esp", ".esm"};
 

@@ -186,9 +186,11 @@ public class PathService {
                     newProgressBar.setIndeterminate(false);
                     if (!installed) {
                         swingUtil.cannotInstall(newMod);
+                    } else {
+                        log.info("[SwingWorker.done] installed !");
                     }
                 } catch (InterruptedException | ExecutionException e) {
-                    log.error("error", e);
+                    log.error("[SwingWorker.done] error", e);
                 }
             }
         };
